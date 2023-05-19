@@ -1,0 +1,10 @@
+.category-item {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.category-item:hover {
+    background-color: yellow;
+}

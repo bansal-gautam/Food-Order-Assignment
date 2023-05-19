@@ -1,0 +1,40 @@
+.mealitem-container {
+    height: 70px;
+    border-bottom: 1px solid gray;
+    align-items: center;
+}
+
+.veg-flag {
+    width: 20px;
+    height: 20px;
+}
+
+.veg {
+    background-color: green;
+}
+
+.non-veg {
+    background-color: red;
+}
+
+.add-remove {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 19px;
+}
+
+.add-remove:hover {
+    background-color: yellow;
+}
+
+.mealsitem-title {
+    width: 75%;
+    /* min-width: 200px; */
+}

@@ -1,0 +1,21 @@
+.cart-container {
+    box-shadow: 2px 2px 2px rgb(83, 83, 83);
+}
+
+.total-icon {
+    height: 70px;
+    align-items: center;
+    background-color: yellow;
+}
+
+.total-icon > span {
+    cursor: pointer;
+}
+
+.checkout-button {
+    display: block;
+    margin: 0 auto 5px auto;
+    background-color: yellow;
+    border: none;
+    font-size: 1.5rem;
+}

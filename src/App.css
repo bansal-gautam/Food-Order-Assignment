@@ -1,0 +1,19 @@
+.app-container {
+    box-sizing: border-box;
+    height: 100vh;
+    overflow-y: scroll;
+    background-color: white;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.app-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.app-container {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

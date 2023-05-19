@@ -1,0 +1,8 @@
+.meals-container {
+    max-height: 90vh;
+    overflow-y: scroll;
+}
+
+.meals-head {
+    background-color: yellow;
+}
