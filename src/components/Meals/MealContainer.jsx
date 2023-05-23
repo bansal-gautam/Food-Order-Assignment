@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MealItem from "./MealItem";
 import "./MealContainer.css";
 
-const MealContainer = ({ data, filter, forAll }) => {
+const MealContainer = ({ data, filter, forAll, addHandler, removeHandler }) => {
   const filterData = (value) => {
     return data.filter((item) => item.category === value);
   };
@@ -16,7 +16,12 @@ const MealContainer = ({ data, filter, forAll }) => {
               <h4>{item[0].category}</h4>
             </div>
             {item.map((dat) => (
-              <MealItem key={`${Math.random() * 1000000}`} data={dat} />
+              <MealItem
+                key={`${Math.random() * 1000000}`}
+                data={dat}
+                onAdd={addHandler}
+                onRemove={removeHandler}
+              />
             ))}
           </div>
         ))
@@ -26,7 +31,12 @@ const MealContainer = ({ data, filter, forAll }) => {
             <h4>{filter}</h4>
           </div>
           {filterData(filter).map((item, index) => (
-            <MealItem key={`${filter}${index}`} data={item} />
+            <MealItem
+              key={`${filter}${index}`}
+              data={item}
+              onAdd={addHandler}
+              onRemove={removeHandler}
+            />
           ))}
         </>
       )}

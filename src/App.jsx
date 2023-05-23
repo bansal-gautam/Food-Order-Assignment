@@ -3,11 +3,57 @@ import "./App.css";
 import CartContainer from "./components/Cart/CartContainer";
 import CategoryContainer from "./components/Categories/CategoryContainer";
 import MealContainer from "./components/Meals/MealContainer";
-import CartProvider from "./store/CartProvider";
 
 function App() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState("All");
+  const [cartItems, setCartItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  const addToCart = (item) => {
+    setTotalAmount((prev) => prev + item.price);
+    const foundItemIndex = cartItems.findIndex(
+      (prevItem) => prevItem.name === item.name
+    );
+    const foundItem = cartItems[foundItemIndex];
+    let updatedItems;
+    if (foundItem) {
+      const updatedItem = { ...foundItem, quantity: foundItem.quantity + 1 };
+      updatedItems = [...cartItems];
+      updatedItems[foundItemIndex] = updatedItem;
+    } else {
+      updatedItems = cartItems.concat({ ...item, quantity: 1 });
+    }
+    setCartItems(updatedItems);
+  };
+
+  const removeFromCart = (item) => {
+    const foundItemIndex = cartItems.findIndex(
+      (prevItem) => prevItem.name === item.name
+    );
+    const foundItem = cartItems[foundItemIndex];
+    let updatedItems;
+    if (foundItem) {
+      setTotalAmount((prev) => prev - foundItem.price);
+      if (foundItem.quantity === 1) {
+        updatedItems = [
+          ...cartItems.filter((prevItem) => prevItem.name !== foundItem.name),
+        ];
+      } else {
+        const updatedItem = { ...foundItem, quantity: foundItem.quantity - 1 };
+        updatedItems = [...cartItems];
+        updatedItems[foundItemIndex] = updatedItem;
+      }
+    } else {
+      return;
+    }
+    setCartItems(updatedItems);
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    setTotalAmount(0);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,6 +61,7 @@ function App() {
         "https://gist.githubusercontent.com/RudarDaman/39349c73d0693a5cd082a47818981a59/raw/c4fedf7ac2a23cb32bf37c83f7af7f5efc08828f/menu.json"
       );
       const result = await response.json();
+      result.map((item) => (item.quantity = 0));
       setData(result);
     };
 
@@ -31,22 +78,26 @@ function App() {
 
   const clickHandler = (value) => {
     setSelected((prev) => value.title);
-    let elements = document.getElementsByClassName("category-item");
-    elements = Array.from(elements);
-    elements.map((element) => (element.style.backgroundColor = "white"));
-    document.getElementById(`${value.id}`).style.backgroundColor = "yellow";
   };
 
   return (
-    <CartProvider>
-      <div className="container border border-5 app-container px-4 pt-3">
-        <div className="row align-items-start">
-          <CategoryContainer array={categoryArray} onClick={clickHandler} />
-          <MealContainer data={data} filter={selected} forAll={categoryArray} />
-          <CartContainer />
-        </div>
+    <div className="container border border-5 app-container px-4 pt-3">
+      <div className="row align-items-start">
+        <CategoryContainer array={categoryArray} onClick={clickHandler} />
+        <MealContainer
+          data={data}
+          filter={selected}
+          forAll={categoryArray}
+          addHandler={addToCart}
+          removeHandler={removeFromCart}
+        />
+        <CartContainer
+          cartCtx={cartItems}
+          clearHandler={clearCart}
+          amount={totalAmount}
+        />
       </div>
-    </CartProvider>
+    </div>
   );
 }
 

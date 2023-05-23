@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import "./MealItem.css";
-import CartContext from "../../store/cart-context";
 
-const MealItem = ({ data }) => {
-  const cartCtx = useContext(CartContext);
+const MealItem = ({ data, onAdd, onRemove }) => {
   const addHandler = () => {
-    cartCtx.addItem(data);
+    onAdd(data);
   };
 
   const removeHandler = () => {
-    cartCtx.removeItem(data.name);
+    onRemove(data);
   };
   return (
     <div className="d-flex mealitem-container mx-2">
